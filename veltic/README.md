@@ -43,8 +43,8 @@ https://github.com/user-attachments/assets/441ff997-ceab-435b-8a22-c85aa2a275b5
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/tempo-velt-starter.git
-   cd tempo-velt-starter
+   git clone https://github.com/Studio1HQ/Velt-Template.git
+   cd veltic
    ```
 
 2. Install dependencies:
