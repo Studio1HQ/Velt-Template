@@ -33,16 +33,34 @@ const AnalyticsDashboard = () => {
       if (user) {
         try {
           setIsLoading(true);
-          // Query the subscriptions table to check if the user has an active subscription
+          
+          // First, get the user's user_id from the users table
+          const { data: userData, error: userError } = await supabase
+            .from('users')
+            .select('user_id')
+            .eq('id', user.id)
+            .single();
+            
+          if (userError) {
+            console.error('Error fetching user data:', userError);
+            return;
+          }
+          
+          if (!userData?.user_id) {
+            console.error('User not found or user_id is missing');
+            return;
+          }
+          
+          // Now query the subscriptions table with the correct user_id
           const { data, error } = await supabase
             .from('subscriptions')
             .select('*')
-            .eq('user_id', user.id)
-            .eq('status', 'active')
-            .single();
+            .eq('user_id', userData.user_id)
+            .eq('status', 'active');
 
           if (error) {
-          } else if (data) {
+            console.error('Error fetching subscription:', error);
+          } else if (data && data.length > 0) {
             setIsPremium(true);
           }
         } catch (error) {

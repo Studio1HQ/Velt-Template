@@ -1,6 +1,6 @@
 # Tempo + Velt Starter Kit
 
-A modern, dark-themed analytics dashboard starter kit built with React, TypeScript, Tailwind CSS, Supabase, and Velt collaboration features.
+A modern, dark-themed analytics dashboard starter kit built with React, TypeScript, Tailwind CSS, Supabase, and Velt collaboration features. Powered by TempoLabs AI development tools for enhanced productivity.
 
 ![image](https://github.com/user-attachments/assets/3ac2f5d3-50e6-4e27-8752-39048f79e7cf)
 
@@ -18,6 +18,19 @@ https://github.com/user-attachments/assets/441ff997-ceab-435b-8a22-c85aa2a275b5
 - 🎨 **UI Components**: Comprehensive set of accessible UI components using Radix UI and shadcn/ui
 - 📱 **Responsive Design**: Fully responsive layout that works on all devices
 - 🚀 **Performance**: Built with React + Vite for fast development and optimal performance
+- 🧠 **TempoLabs Integration**: Enhanced development experience with AI-powered tools
+
+## About TempoLabs
+
+[TempoLabs](https://www.tempo.new/) is a platform where designers and developers collaborate on code. It provides AI-powered tools to build React applications up to 10x faster with features like:
+
+- Visual editing of React components
+- Design system integration
+- AI code generation and assistance
+- Seamless GitHub integration
+- Drag-and-drop interface that feels like a design tool
+
+This starter kit integrates TempoLabs' development tools to enhance workflow and productivity.
 
 ## Tech Stack
 
@@ -26,6 +39,7 @@ https://github.com/user-attachments/assets/441ff997-ceab-435b-8a22-c85aa2a275b5
 - **Backend**: Supabase (Authentication, Database, Edge Functions)
 - **Payments**: Stripe integration
 - **Collaboration**: Velt for real-time collaboration features
+- **Development Tools**: TempoLabs AI-powered development suite
 - **Routing**: React Router
 - **Forms**: React Hook Form with Zod validation
 
@@ -38,6 +52,7 @@ https://github.com/user-attachments/assets/441ff997-ceab-435b-8a22-c85aa2a275b5
 - Supabase account
 - Stripe account (for payment processing)
 - Velt account (for collaboration features)
+- TempoLabs account (for enhanced development experience)
 
 ### Installation
 
@@ -88,6 +103,12 @@ https://github.com/user-attachments/assets/441ff997-ceab-435b-8a22-c85aa2a275b5
 2. Create a new project and get your API key
 3. Add the API key to your `.env` file
 
+## TempoLabs Setup
+
+1. Create a TempoLabs account at [tempo.new](https://www.tempo.new/)
+2. Use TempoLabs' visual editor and AI tools to enhance your development workflow
+3. Checkout complete documentation guide for [Vite React + Supabase + Stripe](https://tempolabsinc.mintlify.app/ViteSupabaseStripe) setup
+
 ## Project Structure
 
 ```
@@ -110,6 +131,7 @@ https://github.com/user-attachments/assets/441ff997-ceab-435b-8a22-c85aa2a275b5
 │   │   ├── get-plans/       # Get subscription plans function
 │   │   └── payments-webhook/# Stripe webhook handler
 │   └── migrations/          # Database migrations
+├── tempo.config.json        # TempoLabs configuration
 └── ...                      # Configuration files
 ```
 
@@ -146,6 +168,14 @@ Velt integration provides:
 - Comments and annotations
 - Task management
 
+### TempoLabs Integration
+
+Enhance your development workflow with:
+- Visual editing of React components
+- AI-powered code generation
+- Design system integration
+- Error handling and debugging tools
+
 ## Customization
 
 ### Styling
@@ -176,6 +206,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Acknowledgements
 
+- [TempoLabs](https://www.tempo.new/) for AI-powered development tools
 - [Supabase](https://supabase.io/) for authentication and backend services
 - [Velt](https://www.velt.dev/) for collaboration features
 - [shadcn/ui](https://ui.shadcn.com/) for UI components

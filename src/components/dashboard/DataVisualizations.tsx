@@ -52,16 +52,20 @@ const DataVisualizations = ({ isPremium = false }: DataVisualizationsProps) => {
   const graphWidth = width - margin.left - margin.right;
   const graphHeight = height - margin.top - margin.bottom;
 
-  const xScale = (x: number) => (x * graphWidth / (data.length - 1)) + margin.left;
+  // Get the maximum Y value, with a fallback to 1 to avoid division by zero
+  const maxY = data.length > 0 ? Math.max(...data.map(d => d.y), 1) : 1;
+
+  const xScale = (x: number) => (x * graphWidth / (Math.max(data.length - 1, 1))) + margin.left;
+  
   const yScale = (y: number) => {
-    const maxY = Math.max(...data.map(d => d.y));
+    // Ensure we don't divide by zero and handle empty data
     return height - margin.bottom - ((y / maxY) * graphHeight);
   };
 
   // Generate line path
-  const linePath = data
-    .map((point, i) => `${i === 0 ? 'M' : 'L'} ${xScale(point.x)} ${yScale(point.y)}`)
-    .join(' ');
+  const linePath = data.length > 0 
+    ? data.map((point, i) => `${i === 0 ? 'M' : 'L'} ${xScale(point.x)} ${yScale(point.y)}`).join(' ')
+    : '';
 
   const handleUpgradeClick = () => {
     navigate("/plans");
@@ -69,7 +73,6 @@ const DataVisualizations = ({ isPremium = false }: DataVisualizationsProps) => {
 
   // Y-axis ticks
   const yAxisTicks = () => {
-    const maxY = Math.max(...data.map(d => d.y));
     const ticks = [];
     for (let i = 0; i <= 5; i++) {
       const value = (maxY / 5) * i;
@@ -186,18 +189,20 @@ const DataVisualizations = ({ isPremium = false }: DataVisualizationsProps) => {
             ))}
 
             {/* Line graph */}
-            <AnimatePresence>
-              <motion.path
-                key={`${timeRange}-${dataType}`}
-                d={linePath}
-                fill="none"
-                stroke="url(#gradient)"
-                strokeWidth="3"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 1, ease: "easeInOut" }}
-              />
-            </AnimatePresence>
+            {data.length > 0 && (
+              <AnimatePresence>
+                <motion.path
+                  key={`${timeRange}-${dataType}`}
+                  d={linePath}
+                  fill="none"
+                  stroke="url(#gradient)"
+                  strokeWidth="3"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1, ease: "easeInOut" }}
+                />
+              </AnimatePresence>
+            )}
 
             {/* Gradient definition */}
             <defs>

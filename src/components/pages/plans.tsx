@@ -123,12 +123,30 @@ const Plans = () => {
     setIsLoading(true);
     
     try {
+      // First, get the user's user_id from the users table
+      const { data: userData, error: userError } = await supabase
+        .from('users')
+        .select('user_id')
+        .eq('id', user.id)
+        .single();
+        
+      if (userError) {
+        console.error('Error fetching user data:', userError);
+        throw new Error('Could not retrieve user information');
+      }
+      
+      if (!userData?.user_id) {
+        console.error('User not found or user_id is missing');
+        throw new Error('User information is incomplete');
+      }
+      
+      // Now create the checkout session with the correct user_id
       const { data, error } = await supabase.functions.invoke(
         "supabase-functions-create-checkout",
         {
           body: {
             price_id: priceId,
-            user_id: user.id,
+            user_id: userData.user_id, // Use the text user_id instead of UUID
             return_url: `${window.location.origin}/dashboard`,
           },
           headers: {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useIdentify } from '@veltdev/react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -28,14 +28,8 @@ const VeltAuth = () => {
 
   // Call useIdentify at the top level with the user object or null
   useIdentify(veltUser);
-  
-  useEffect(() => {
-    if (user && veltUser) {
-      console.log('User authenticated with Velt:', veltUser.name);
-    }
-  }, [user, veltUser]);
 
-  return null; // This component doesn't render anything
+  return null;
 };
 
 export default VeltAuth; 
