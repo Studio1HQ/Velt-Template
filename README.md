@@ -141,8 +141,6 @@ This starter kit integrates TempoLabs' development tools to enhance workflow and
 
 The starter kit includes a complete authentication system powered by Supabase Auth, with:
 - Email/password authentication
-- Social login (Google, GitHub, etc.)
-- Password reset flow
 - Protected routes
 
 ### Subscription Plans
