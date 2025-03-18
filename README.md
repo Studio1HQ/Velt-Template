@@ -58,8 +58,8 @@ This starter kit integrates TempoLabs' development tools to enhance workflow and
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Studio1HQ/Velt-Template.git
-   cd veltic
+   git clone https://github.com/Studio1HQ/Velt-Tempo-Starter.git
+   cd Velt-Tempo-Starter
    ```
 
 2. Install dependencies:
