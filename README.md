@@ -2,10 +2,11 @@
 
 A modern, dark-themed analytics dashboard starter kit built with React, TypeScript, Tailwind CSS, Supabase, and Velt collaboration features. Powered by TempoLabs AI development tools for enhanced productivity.
 
-![image](https://github.com/user-attachments/assets/3ac2f5d3-50e6-4e27-8752-39048f79e7cf)
+![image](https://github.com/user-attachments/assets/bd5a73e6-4cd7-447f-8834-54c3215af2fa)
 
 
-https://github.com/user-attachments/assets/441ff997-ceab-435b-8a22-c85aa2a275b5
+https://github.com/user-attachments/assets/68f9ca13-7bab-479c-9c1c-83cbc1d84926
+
 
 
 ## Features
