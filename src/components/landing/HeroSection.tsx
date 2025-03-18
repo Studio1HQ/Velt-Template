@@ -60,7 +60,7 @@ const HeroSection: React.FC = () => {
               <span>Open source</span>
             </div>
           </div>
-          <div className="lg:w-1/2 relative">
+          <div className="invisible hidden sm:visible sm:block lg:w-1/2 relative">
             <div className="absolute -z-10 inset-0 bg-gradient-to-tr from-blue-900/30 via-purple-800/20 to-gray-900/10 rounded-3xl blur-2xl transform scale-110" />
             <div className="bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-xl shadow-xl overflow-hidden">
               <div className="p-1 bg-gradient-to-r from-blue-800 via-purple-700 to-gray-800 rounded-t-xl">
