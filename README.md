@@ -1,6 +1,6 @@
 # Tempo + Velt Starter Kit
 
-A modern, dark-themed analytics dashboard starter kit built with React, TypeScript, Tailwind CSS, Supabase, and Velt collaboration features. Powered by TempoLabs AI development tools for enhanced productivity.
+A modern, dark-themed analytics dashboard starter kit built with React, TypeScript, Tailwind CSS, Supabase, Stripe and Velt collaboration features - Powered by **TempoLabs AI**.
 
 ![image](https://github.com/user-attachments/assets/bd5a73e6-4cd7-447f-8834-54c3215af2fa)
 
@@ -15,7 +15,7 @@ https://github.com/user-attachments/assets/68f9ca13-7bab-479c-9c1c-83cbc1d84926
 - 📊 **Analytics Dashboard**: Interactive visualizations and data insights
 - 🔐 **Authentication**: Complete auth flow with Supabase (sign up, sign in, password reset)
 - 💳 **Subscription Payments**: Integrated Stripe payment processing with subscription plans
-- 👥 **Real-time Collaboration**: Velt integration for presence awareness, comments, and cursor following
+- 👥 **Real-time Collaboration**: Velt integration for presence awareness, react comments and cursor following
 - 🎨 **UI Components**: Comprehensive set of accessible UI components using Radix UI and shadcn/ui
 - 📱 **Responsive Design**: Fully responsive layout that works on all devices
 - 🚀 **Performance**: Built with React + Vite for fast development and optimal performance
@@ -164,7 +164,7 @@ A beautiful dark-themed dashboard with:
 Velt integration provides:
 - Presence awareness (see who's online)
 - Cursor following (see where teammates are pointing)
-- Comments and annotations
+- React comment and annotations
 - Task management
 
 ### TempoLabs Integration
