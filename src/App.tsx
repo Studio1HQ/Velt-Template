@@ -9,7 +9,7 @@ import Plans from "./components/pages/plans";
 import Success from "./components/pages/success";
 import Home from "./components/pages/home";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import { VeltComments, VeltCursor, VeltProvider } from "@veltdev/react";
+import { VeltComments, VeltProvider } from "@veltdev/react";
 import VeltAuth from "./components/velt/VeltAuth";
 import { Toaster } from "sonner";
 
@@ -72,10 +72,12 @@ function App() {
   return (
     <AuthProvider>
       <Suspense fallback={<p>Loading...</p>}>
+        {/* [VELT] Provider Component. Used to provide the Velt context to the app. */}
       <VeltProvider apiKey={import.meta.env.VITE_VELT_API_KEY}>
-          <VeltComments popoverMode={true} popoverTriangleComponent={true} />
-          <Toaster position="top-right" richColors />
-          <AppRoutes />
+        {/* [VELT] Comments Component. Used to display the comments sidebar. */}
+        <VeltComments popoverMode={true} popoverTriangleComponent={true} />
+        <Toaster position="top-right" richColors />
+        <AppRoutes />
         </VeltProvider>
       </Suspense>
     </AuthProvider>

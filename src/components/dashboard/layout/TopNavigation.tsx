@@ -36,7 +36,9 @@ const TopNavigation = () => {
       </div>
 
       <div className="flex items-center gap-2">
+        {/* [VELT] Comment Sidebar Button Component. Used to open the comment sidebar. */}
         <VeltCommentsSidebarButton />
+        {/* [VELT] Presence Component. Used to display the user's presence. */}
         <VeltPresence />
 
         <DropdownMenu>

@@ -1,3 +1,5 @@
+// [VELT] Auth Component. Used to identify the user in Velt.
+
 import React from 'react';
 import { useIdentify } from '@veltdev/react';
 import { useAuth } from '../../context/AuthContext';

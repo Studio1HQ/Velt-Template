@@ -6,8 +6,7 @@ import {
   Users,
   DollarSign,
   BarChart2,
-  Clock,
-  MessageCircle
+  Clock
 } from "lucide-react";
 import { VeltCommentTool, VeltCommentBubble } from "@veltdev/react";
 
@@ -160,6 +159,7 @@ const MetricCard = ({ title, value, change, icon, id }: MetricCardProps) => {
         ref={commentToolRef}
         className={`absolute top-2 right-2 transition-opacity duration-200 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
       >
+        {/* [VELT] Comment Tool Component. Used to add comments to the card. */}
         <VeltCommentTool 
           targetElementId={id} 
           key={`comment-tool-${id}-${forceUpdate}`}
@@ -169,6 +169,7 @@ const MetricCard = ({ title, value, change, icon, id }: MetricCardProps) => {
       {/* Comment bubble - only shown when there are comments */}
       {showCommentBubble && (
         <div className="absolute bottom-2 right-2">
+          {/* [VELT] Comment Bubble Component. Enables comment bubble display on hover or on click on metric cards */}
           <VeltCommentBubble 
             targetElementId={id}
             commentCountType="total"
