@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -21,6 +21,28 @@ const DataVisualizations = ({ isPremium = false }: DataVisualizationsProps) => {
   const navigate = useNavigate();
   const [dataType, setDataType] = useState("views");
   const [data, setData] = useState<DataPoint[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 800, height: 400 });
+
+  //resize observer to handle responsive sizing
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width } = entry.contentRect;
+        // Maintain aspect ratio while being responsive
+        setDimensions({
+          width: width,
+          height: Math.max(300, width * 0.5) // Minimum height of 300px, otherwise 50% of width
+        });
+      }
+    });
+
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+
+    return () => resizeObserver.disconnect();
+  }, []);
 
   // Generate mock data based on filters
   useEffect(() => {
@@ -46,8 +68,8 @@ const DataVisualizations = ({ isPremium = false }: DataVisualizationsProps) => {
 
   // Calculate SVG dimensions and scales
   const margin = { top: 20, right: 30, bottom: 40, left: 60 };
-  const width = 800;
-  const height = 400;
+  const width = dimensions.width;
+  const height = dimensions.height;
   const graphWidth = width - margin.left - margin.right;
   const graphHeight = height - margin.top - margin.bottom;
 
@@ -162,8 +184,8 @@ const DataVisualizations = ({ isPremium = false }: DataVisualizationsProps) => {
       </CardHeader>
 
       <CardContent className="pt-6">
-        <div className="relative">
-          <svg width={width} height={height} className={`${!isPremium ? 'blur-sm' : ''}`}>
+        <div className="relative w-full" ref={containerRef}>
+          <svg width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet" className={`${!isPremium ? 'blur-sm' : ''}`}>
             {/* Y-axis */}
             <line
               x1={margin.left}
