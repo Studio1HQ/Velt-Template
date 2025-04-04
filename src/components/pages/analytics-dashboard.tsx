@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import TopNavigation from "../dashboard/layout/TopNavigation";
 import MetricCards from "../dashboard/MetricCards";
 import AnalyticsCharts from "../dashboard/AnalyticsCharts";
 import DataVisualizations from "../dashboard/DataVisualizations";
@@ -36,27 +35,27 @@ const AnalyticsDashboard = () => {
           
           // First, get the user's user_id from the users table
           const { data: userData, error: userError } = await supabase
-            .from('users')
-            .select('user_id')
-            .eq('id', user.id)
+            .from("users")
+            .select("user_id")
+            .eq("id", user.id)
             .single();
-            
+
           if (userError) {
-            console.error('Error fetching user data:', userError);
+            console.error("Error fetching user data:", userError);
             return;
           }
-          
+
           if (!userData?.user_id) {
-            console.error('User not found or user_id is missing');
+            console.error("User not found or user_id is missing");
             return;
           }
-          
+
           // Now query the subscriptions table with the correct user_id
           const { data, error } = await supabase
-            .from('subscriptions')
-            .select('*')
-            .eq('user_id', userData.user_id)
-            .eq('status', 'active');
+            .from("subscriptions")
+            .select("*")
+            .eq("user_id", userData.user_id)
+            .eq("status", "active");
 
           if (error) {
             console.error('Error fetching subscription:', error);
@@ -81,22 +80,16 @@ const AnalyticsDashboard = () => {
 
   const handleUpgradeClick = () => {
     navigate("/plans");
-    toast.info('Choose a subscription plan to unlock premium features');
+    toast.info("Choose a subscription plan to unlock premium features");
   };
 
   return (
     <div className="min-h-screen bg-gray-950">
-      <TopNavigation />
-
       <div className="flex">
-        
         <main className="flex-1 overflow-auto p-6">
           {/* Enable Velt Comments with popover mode */}
-          <VeltComments 
-            popoverMode={true} 
-            popoverTriangleComponent={true} 
-          />
-          
+          <VeltComments popoverMode={true} popoverTriangleComponent={true} />
+
           <div className="mb-6 flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-white">
@@ -119,7 +112,7 @@ const AnalyticsDashboard = () => {
                 </Badge>
               </Button>
             )}
-            
+
             {isPremium && (
               <Badge className="bg-gradient-to-r from-amber-400 to-amber-600 text-white px-3 py-1">
                 Premium Account
@@ -129,11 +122,17 @@ const AnalyticsDashboard = () => {
 
           <Tabs defaultValue="overview" className="space-y-6">
             <TabsList className="bg-gray-900 border border-gray-800">
-              <TabsTrigger value="overview" className="data-[state=active]:bg-indigo-600">
+              <TabsTrigger
+                value="overview"
+                className="data-[state=active]:bg-indigo-600"
+              >
                 <BarChart3 className="h-4 w-4 mr-2" />
                 Overview
               </TabsTrigger>
-              <TabsTrigger value="activity" className="data-[state=active]:bg-indigo-600">
+              <TabsTrigger
+                value="activity"
+                className="data-[state=active]:bg-indigo-600"
+              >
                 <Activity className="h-4 w-4 mr-2" />
                 Activity
               </TabsTrigger>
@@ -141,13 +140,11 @@ const AnalyticsDashboard = () => {
 
             <TabsContent value="overview" className="space-y-6">
               <MetricCards />
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
                 <AnalyticsCharts isPremium={isPremium} />
                 <DataVisualizations isPremium={isPremium} />
               </div>
-
-              
             </TabsContent>
 
             <TabsContent value="activity" className="space-y-6">
@@ -162,17 +159,25 @@ const AnalyticsDashboard = () => {
                   <div className="h-min-screen bg-gray-800 rounded-md p-4">
                     <div className="space-y-4">
                       {[1, 2, 3, 4, 5].map((item) => (
-                        <div key={item} className="flex items-center justify-between p-3 bg-gray-850 rounded-md border border-gray-700">
+                        <div
+                          key={item}
+                          className="flex items-center justify-between p-3 bg-gray-850 rounded-md border border-gray-700"
+                        >
                           <div className="flex items-center">
                             <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold">
                               {String.fromCharCode(64 + item)}
                             </div>
                             <div className="ml-3">
                               <p className="text-white">User Activity {item}</p>
-                              <p className="text-gray-400 text-sm">{new Date().toLocaleDateString()}</p>
+                              <p className="text-gray-400 text-sm">
+                                {new Date().toLocaleDateString()}
+                              </p>
                             </div>
                           </div>
-                          <Badge variant="outline" className="text-indigo-400 border-indigo-400">
+                          <Badge
+                            variant="outline"
+                            className="text-indigo-400 border-indigo-400"
+                          >
                             {Math.floor(Math.random() * 100)}%
                           </Badge>
                         </div>
@@ -183,7 +188,7 @@ const AnalyticsDashboard = () => {
               </Card>
             </TabsContent>
           </Tabs>
-          
+
           {/* Comments Sidebar */}
           <div className="fixed right-0 top-0 h-full">
             <VeltCommentsSidebar />

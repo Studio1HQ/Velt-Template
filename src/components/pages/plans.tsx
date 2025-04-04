@@ -122,7 +122,7 @@ const Plans = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-950 to-gray-900">
       <TopNavigation />
 
-      <div className="pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="pt-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         
         <PricingSection 
           plans={plans}

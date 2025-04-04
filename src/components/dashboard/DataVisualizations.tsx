@@ -19,7 +19,6 @@ interface DataPoint {
 
 const DataVisualizations = ({ isPremium = false }: DataVisualizationsProps) => {
   const navigate = useNavigate();
-  const [timeRange, setTimeRange] = useState("7days");
   const [dataType, setDataType] = useState("views");
   const [data, setData] = useState<DataPoint[]>([]);
 
@@ -27,7 +26,7 @@ const DataVisualizations = ({ isPremium = false }: DataVisualizationsProps) => {
   useEffect(() => {
     const generateData = () => {
       const points: DataPoint[] = [];
-      const days = timeRange === "7days" ? 7 : timeRange === "14days" ? 14 : 30;
+      const days = 7;
       const maxValue = dataType === "views" ? 1000 : dataType === "users" ? 500 : 100;
       
       for (let i = 0; i < days; i++) {
@@ -43,7 +42,7 @@ const DataVisualizations = ({ isPremium = false }: DataVisualizationsProps) => {
     };
 
     setData(generateData());
-  }, [timeRange, dataType]);
+  }, [dataType]); // Removed timeRange and isPremium from dependencies since we only use 7 days now
 
   // Calculate SVG dimensions and scales
   const margin = { top: 20, right: 30, bottom: 40, left: 60 };
@@ -122,19 +121,26 @@ const DataVisualizations = ({ isPremium = false }: DataVisualizationsProps) => {
             </Badge>
           </CardTitle>
           
-          {isPremium && (
+          {isPremium ? (
             <div className="flex gap-4">
-              <Select value={timeRange} onValueChange={setTimeRange}>
+              <Select value={dataType} onValueChange={setDataType}>
                 <SelectTrigger className="w-32 bg-gray-800 border-gray-700 text-gray-200">
-                  <SelectValue placeholder="Time Range" />
+                  <SelectValue placeholder="Data Type" />
                 </SelectTrigger>
-                <SelectContent className="bg-gray-800 border-gray-700">
-                  <SelectItem value="7days">7 Days</SelectItem>
-                  <SelectItem value="14days">14 Days</SelectItem>
-                  <SelectItem value="30days">30 Days</SelectItem>
+                <SelectContent className="bg-gray-800 border-gray-700 text-gray-200">
+                  <SelectItem value="views">Page Views</SelectItem>
+                  <SelectItem value="users">Active Users</SelectItem>
+                  <SelectItem value="conversions">Conversions</SelectItem>
                 </SelectContent>
               </Select>
-              
+              <div className="flex items-center">
+                <Badge className="bg-gray-800 text-gray-400 border border-gray-700">
+                  Last 7 Days
+                </Badge>
+              </div>
+            </div>
+          ) : (
+            <div className="flex gap-4">
               <Select value={dataType} onValueChange={setDataType}>
                 <SelectTrigger className="w-32 bg-gray-800 border-gray-700 text-gray-200">
                   <SelectValue placeholder="Data Type" />
@@ -145,6 +151,11 @@ const DataVisualizations = ({ isPremium = false }: DataVisualizationsProps) => {
                   <SelectItem value="conversions">Conversions</SelectItem>
                 </SelectContent>
               </Select>
+              <div className="flex items-center">
+                <Badge className="bg-gray-800 text-gray-400 border border-gray-700">
+                  Last 7 Days
+                </Badge>
+              </div>
             </div>
           )}
         </div>
@@ -192,7 +203,7 @@ const DataVisualizations = ({ isPremium = false }: DataVisualizationsProps) => {
             {data.length > 0 && (
               <AnimatePresence>
                 <motion.path
-                  key={`${timeRange}-${dataType}`}
+                  key={dataType}
                   d={linePath}
                   fill="none"
                   stroke="url(#gradient)"
@@ -215,7 +226,7 @@ const DataVisualizations = ({ isPremium = false }: DataVisualizationsProps) => {
             {/* Data points */}
             {data.map((point, i) => (
               <motion.circle
-                key={`${timeRange}-${dataType}-${i}`}
+                key={`${dataType}-${i}`}
                 cx={xScale(point.x)}
                 cy={yScale(point.y)}
                 r="4"

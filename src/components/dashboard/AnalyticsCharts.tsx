@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
@@ -19,6 +19,7 @@ import {
 import { format } from "date-fns";
 import { CalendarIcon, Download, Filter, RefreshCw } from "lucide-react";
 import { motion } from "framer-motion";
+import { MONTHS, WEEKS } from "@/lib/constant";
 
 interface AnalyticsChartsProps {
   isPremium?: boolean;
@@ -26,10 +27,10 @@ interface AnalyticsChartsProps {
 
 const AnalyticsCharts = ({ isPremium = false }: AnalyticsChartsProps) => {
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [activeTab, setActiveTab] = useState("daily");
+  const [activeTab, setActiveTab] = useState("weekly");
   const [selectedMetric, setSelectedMetric] = useState("users");
 
-  // Mock data for charts
+  // Mock data for charts - updated to generate appropriate number of data points
   const generateMockData = (points: number, growth: boolean = true) => {
     const data = [];
     let value = Math.floor(Math.random() * 100) + 50;
@@ -48,16 +49,29 @@ const AnalyticsCharts = ({ isPremium = false }: AnalyticsChartsProps) => {
   };
 
   const chartData = {
-    users: generateMockData(30, true),
-    revenue: generateMockData(30, true),
-    conversion: generateMockData(30, false),
-    engagement: generateMockData(30, true),
+    users: {
+      weekly: generateMockData(7, true),
+      monthly: generateMockData(12, true)
+    },
+    revenue: {
+      weekly: generateMockData(7, true),
+      monthly: generateMockData(12, true)
+    },
+    conversion: {
+      weekly: generateMockData(7, false),
+      monthly: generateMockData(12, false)
+    },
+    engagement: {
+      weekly: generateMockData(7, true),
+      monthly: generateMockData(12, true)
+    }
   };
 
+  // Get current data based on active tab and selected metric
+  const currentData = chartData[selectedMetric as keyof typeof chartData][activeTab as 'weekly' | 'monthly'];
+
   // Calculate max value for scaling
-  const maxValue = Math.max(
-    ...chartData[selectedMetric as keyof typeof chartData],
-  );
+  const maxValue = Math.max(...currentData);
 
   return (
     <Card className="border-gray-800 bg-gray-900 shadow-xl">
@@ -90,17 +104,11 @@ const AnalyticsCharts = ({ isPremium = false }: AnalyticsChartsProps) => {
         <div className="mb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-2">
             <Tabs
-              defaultValue="daily"
+              defaultValue="weekly"
               className="w-full sm:w-auto"
               onValueChange={setActiveTab}
             >
-              <TabsList className="grid w-full grid-cols-3 bg-gray-800">
-                <TabsTrigger
-                  value="daily"
-                  className="data-[state=active]:bg-gray-700 text-gray-300 data-[state=active]:text-white"
-                >
-                  Daily
-                </TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 bg-gray-800">
                 <TabsTrigger
                   value="weekly"
                   className="data-[state=active]:bg-gray-700 text-gray-300 data-[state=active]:text-white"
@@ -182,79 +190,64 @@ const AnalyticsCharts = ({ isPremium = false }: AnalyticsChartsProps) => {
         {/* Chart visualization */}
         <div className="h-[300px] w-full mt-6 relative">
           <div className="absolute inset-0 flex items-end justify-between px-2">
-            {chartData[selectedMetric as keyof typeof chartData].map(
-              (value, index) => {
-                const height = (value / maxValue) * 100;
-                return (
-                  <motion.div
-                    key={index}
-                    className="w-1.5 bg-gradient-to-t from-indigo-500 to-purple-500 rounded-t-sm"
-                    style={{ height: `${height}%` }}
-                    initial={{ height: 0 }}
-                    animate={{ height: `${height}%` }}
-                    transition={{ duration: 0.5, delay: index * 0.02 }}
-                    whileHover={{
-                      scale: 1.2,
-                      backgroundColor: "#8B5CF6",
-                    }}
-                  />
-                );
-              },
-            )}
+            {currentData.map((value, index) => {
+              const height = (value / maxValue) * 100;
+              return (
+                <motion.div
+                  key={index}
+                  className="w-4 bg-gradient-to-t from-indigo-500 to-purple-500 rounded-t-sm"
+                  style={{ height: `${height}%` }}
+                  initial={{ height: 0 }}
+                  animate={{ height: `${height}%` }}
+                  transition={{ duration: 0.5, delay: index * 0.02 }}
+                  whileHover={{
+                    scale: 1.2,
+                    backgroundColor: "#8B5CF6",
+                  }}
+                />
+              );
+            })}
           </div>
 
           {/* X-axis labels */}
           <div className="absolute bottom-[-25px] inset-x-0 flex items-center justify-between px-2">
-            {activeTab === "daily" && (
-              <>
-                <span className="text-xs text-gray-400">1</span>
-                <span className="text-xs text-gray-400">5</span>
-                <span className="text-xs text-gray-400">10</span>
-                <span className="text-xs text-gray-400">15</span>
-                <span className="text-xs text-gray-400">20</span>
-                <span className="text-xs text-gray-400">25</span>
-                <span className="text-xs text-gray-400">30</span>
-              </>
-            )}
             {activeTab === "weekly" && (
-              <>
-                <span className="text-xs text-gray-400">Week 1</span>
-                <span className="text-xs text-gray-400">Week 2</span>
-                <span className="text-xs text-gray-400">Week 3</span>
-                <span className="text-xs text-gray-400">Week 4</span>
-              </>
+              WEEKS.map((week, index) => (
+                <span key={index} className="text-xs text-gray-400">{week}</span>
+              ))
             )}
             {activeTab === "monthly" && (
-              <>
-                <span className="text-xs text-gray-400">Jan</span>
-                <span className="text-xs text-gray-400">Feb</span>
-                <span className="text-xs text-gray-400">Mar</span>
-                <span className="text-xs text-gray-400">Apr</span>
-                <span className="text-xs text-gray-400">May</span>
-                <span className="text-xs text-gray-400">Jun</span>
-                <span className="text-xs text-gray-400">Jul</span>
-                <span className="text-xs text-gray-400">Aug</span>
-                <span className="text-xs text-gray-400">Sep</span>
-                <span className="text-xs text-gray-400">Oct</span>
-                <span className="text-xs text-gray-400">Nov</span>
-                <span className="text-xs text-gray-400">Dec</span>
-              </>
+              MONTHS.map((month, index) => (
+                <span key={index} className="text-xs text-gray-400">{month}</span>
+              ))
             )}
-          </div>
-
+          </div> 
           {/* Y-axis labels */}
-          <div className="absolute left-[-35px] inset-y-0 flex flex-col items-end justify-between py-2">
-            <span className="text-xs text-gray-400">{maxValue}</span>
-            <span className="text-xs text-gray-400">
-              {Math.round(maxValue * 0.75)}
-            </span>
-            <span className="text-xs text-gray-400">
-              {Math.round(maxValue * 0.5)}
-            </span>
-            <span className="text-xs text-gray-400">
-              {Math.round(maxValue * 0.25)}
-            </span>
-            <span className="text-xs text-gray-400">0</span>
+          <div className="absolute left-[-25px] inset-y-0 flex flex-col items-end justify-between py-2">
+            {/* Calculate Y-axis labels divisible by 5 */}
+            {(() => {
+              // Round maxValue up to nearest multiple of 40
+              const roundedMax = Math.ceil(maxValue / 40) * 40;
+              
+              // Create fixed intervals
+              const yAxisValues = [
+                roundedMax,
+                roundedMax * 0.75,
+                roundedMax * 0.5,
+                roundedMax * 0.25,
+                0
+              ];
+              
+              // Ensure all values are divisible by 5
+              const divisibleValues = yAxisValues.map((value, index) => {
+                if (index === 4) return 0; // Keep 0 as is
+                return Math.ceil(value / 5) * 5;
+              });
+              
+              return divisibleValues.map((value, index) => (
+                <span key={index} className="text-xs text-gray-400">{value}</span>
+              ));
+            })()}
           </div>
         </div>
 

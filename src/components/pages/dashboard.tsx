@@ -5,7 +5,6 @@ import {
   useSetDocument, 
   VeltPresence, 
   VeltCursor, 
-  VeltComments, 
   VeltCommentsSidebar,
   VeltCommentTool
 } from "@veltdev/react";
@@ -18,7 +17,7 @@ const Dashboard = () => {
   });
 
   return (
-    <div className="min-h-screen bg-white flex">
+    <div className="min-h-screen flex">
       <TopNavigation />      
       <div className="flex-1 flex flex-col">
         <div className="p-4 flex-1">
@@ -33,8 +32,11 @@ const Dashboard = () => {
           <VeltCommentsSidebar />
           
           {/* Comment Tool Button */}
-          <div className="fixed bottom-4 right-4">
-            <VeltCommentTool />
+          <div className="fixed bottom-4 right-4 animate-pulse">
+            <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur-sm"></div>
+            <div className="relative">
+              <VeltCommentTool />
+            </div>
           </div>
         </div>
       </div>
