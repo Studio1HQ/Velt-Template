@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, BarChart3, Activity } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -114,9 +114,11 @@ const AnalyticsDashboard = () => {
             )}
 
             {isPremium && (
-              <Badge className="bg-gradient-to-r from-amber-400 to-amber-600 text-white px-3 py-1">
-                Premium Account
-              </Badge>
+              <Link to="/plans">
+                <Badge className="bg-gradient-to-r from-amber-400 to-amber-600 text-white px-3 py-1">
+                  Premium Account
+                </Badge>
+              </Link>
             )}
           </div>
 
