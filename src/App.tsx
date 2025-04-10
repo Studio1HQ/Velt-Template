@@ -73,11 +73,16 @@ function App() {
     <AuthProvider>
       <Suspense fallback={<p>Loading...</p>}>
         {/* [VELT] Provider Component. Used to provide the Velt context to the app. */}
-      <VeltProvider apiKey={import.meta.env.VITE_VELT_API_KEY}>
-        {/* [VELT] Comments Component. Used to display the comments sidebar. */}
-        <VeltComments popoverMode={true} popoverTriangleComponent={true} />
-        <Toaster position="top-right" richColors />
-        <AppRoutes />
+        <VeltProvider apiKey={import.meta.env.VITE_VELT_API_KEY}>
+          {/* [VELT] Comments Component. Used to display the comments sidebar. */}
+          <VeltComments
+            popoverMode={true}
+            popoverTriangleComponent={true}
+            textMode={false}
+            commentPinHighlighter={false}
+          />
+          <Toaster position="top-right" richColors />
+          <AppRoutes />
         </VeltProvider>
       </Suspense>
     </AuthProvider>

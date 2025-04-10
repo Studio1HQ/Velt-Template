@@ -88,7 +88,12 @@ const AnalyticsDashboard = () => {
       <div className="flex">
         <main className="flex-1 overflow-auto p-6">
           {/* Enable Velt Comments with popover mode */}
-          <VeltComments popoverMode={true} popoverTriangleComponent={true} />
+          <VeltComments
+            popoverMode={true}
+            popoverTriangleComponent={true}
+            textMode={false}
+            commentPinHighlighter={false}
+          />
 
           <div className="mb-6 flex items-center justify-between">
             <div>
