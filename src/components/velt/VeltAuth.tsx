@@ -1,16 +1,17 @@
 // [VELT] Auth Component. Used to identify the user in Velt.
 
-import React from 'react';
-import { useIdentify } from '@veltdev/react';
-import { useAuth } from '../../context/AuthContext';
+import { useEffect } from "react";
+import { useIdentify, useVeltClient } from "@veltdev/react";
+import { useAuth } from "../../context/AuthContext";
 
 const VeltAuth = () => {
   const { user } = useAuth(); // Get the authenticated user from your Supabase auth context
-  
+  const { client } = useVeltClient(); // Get the Velt client instance
+
   // Create a random color for the user if not provided
   const getRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
+    const letters = "0123456789ABCDEF";
+    let color = "#";
     for (let i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
@@ -18,20 +19,31 @@ const VeltAuth = () => {
   };
 
   // Create the Velt user object from Supabase user data if user exists
-  const veltUser = user ? {
-    userId: user.id,
-    organizationId: 'default-org', // Replace with your organization ID or use a dynamic value
-    name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'Anonymous User',
-    email: user.email,
-    photoUrl: user.user_metadata?.avatar_url || '',
-    color: getRandomColor(), // Generate a random color for the user avatar
-    textColor: '#FFFFFF' // White text color for contrast
-  } : null;
+  const veltUser = user
+    ? {
+        userId: user.id,
+        organizationId: "default-org", // Replace with your organization ID or use a dynamic value
+        name:
+          user.user_metadata?.full_name ||
+          user.email?.split("@")[0] ||
+          "Anonymous User",
+        email: user.email,
+        photoUrl: user.user_metadata?.avatar_url || "",
+        color: getRandomColor(), // Generate a random color for the user avatar
+        textColor: "#FFFFFF", // White text color for contrast
+      }
+    : null;
 
   // Call useIdentify at the top level with the user object or null
   useIdentify(veltUser);
 
-  return null;
+  useEffect(() => {
+    if (client) {
+      client.setDarkMode(true);
+    }
+  }, [user, veltUser]);
+
+  return null; // This component doesn't render anything
 };
 
-export default VeltAuth; 
+export default VeltAuth;

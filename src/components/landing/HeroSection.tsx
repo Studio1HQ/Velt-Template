@@ -34,14 +34,19 @@ const HeroSection: React.FC = () => {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
-              <Button
-                variant="outline"
-                size="lg"
-                className="bg-black border-gray-700 text-white hover:border-black-600 hover:text-black w-full sm:w-auto"
+              <Link
+                to="https://github.com/Studio1HQ/Velt-Tempo-Starter"
+                target="_blank"
               >
-                <Github className="mr-2 h-4 w-4" />
-                View on GitHub
-              </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="bg-black border-gray-700 text-white hover:border-black-600 hover:text-black w-full sm:w-auto"
+                >
+                  <Github className="mr-2 h-4 w-4" />
+                  View on GitHub
+                </Button>
+              </Link>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-400">
               <CheckCircle2 className="h-4 w-4 text-blue-400" />

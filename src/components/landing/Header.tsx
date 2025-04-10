@@ -41,9 +41,9 @@ const Header: React.FC<HeaderProps> = ({ user, signOut }) => {
         {/* Mobile menu button */}
         <button className="md:hidden text-white p-2" onClick={toggleMobileMenu}>
           {mobileMenuOpen ? (
-            <X className="h-6 w-6" />
+            <X className="h-6 w-6 text-white" />
           ) : (
-            <Menu className="h-6 w-6" />
+            <Menu className="h-6 w-6 text-white" />
           )}
         </button>
 
