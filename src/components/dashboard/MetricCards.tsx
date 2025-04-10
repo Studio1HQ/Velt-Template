@@ -132,9 +132,6 @@ const MetricCard = ({ title, value, change, icon, id }: MetricCardProps) => {
           <CardTitle className="text-sm font-medium text-gray-400">
             {title}
           </CardTitle>
-          <div className="h-8 w-8 rounded-full bg-gray-800 p-1.5 text-gray-300">
-            {icon}
-          </div>
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-white">{value}</div>
